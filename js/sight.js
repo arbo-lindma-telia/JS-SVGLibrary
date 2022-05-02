@@ -2,7 +2,7 @@ class SVGElement {
   constructor(type) {
     this.type = type;
     this.namespace = "http://www.w3.org/2000/svg";
-    this.node = document.createElementNS();
+    this.node = document.createElementNS(this.namespace, this.type);
     return this;
   }
 
@@ -15,7 +15,7 @@ class SVGElement {
   }
 
   append(element) {
-    parent =
+    const parent =
       typeof element === "string"
         ? document.querySelector(element)
         : element.node;
@@ -27,8 +27,8 @@ class SVGElement {
 class Sight {
   constructor(selector, width, height) {
     this.svg = new SVGElement("svg")
-      .attr("viewbox", "0 0 ${width} ${height}")
-      .appned(selector);
+      .attr({ viewbox: `0 0 ${width} ${height}` })
+      .append(selector);
   }
 
   draw(type, attrs) {
